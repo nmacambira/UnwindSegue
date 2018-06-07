@@ -10,5 +10,5 @@ create a Single Selection and a Multiple Selection that send data back to the fi
 
 ## Info
 
-- Swift 3.1
+- Swift 4.0
 

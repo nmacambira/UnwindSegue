@@ -13,13 +13,9 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
     @IBOutlet weak var tableView: UITableView!
     
     var sectionsTitles: [String] = ["Activity", "Day of the week"]
-    
     var sectionsCellsText: [String] = ["Select an activity", "Select the days of the week"]
-    
     var selectedActivityIndex: Int?
-    
     var selectedDaysIndex: [Int]?
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,11 +36,8 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
         if section == 0 {
-            
             return sectionsTitles[section]
-            
         } else {
-            
             return sectionsTitles[section]
         }
     }
@@ -53,15 +46,10 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
         if indexPath.section == 0 && sectionsCellsText[0] == "Select an activity" {
-            
             cell.textLabel?.textColor = UIColor.lightGray
-            
         } else if indexPath.section == 1 && sectionsCellsText[1] == "Select the days of the week" {
-            
              cell.textLabel?.textColor = UIColor.lightGray
-            
         } else {
-            
              cell.textLabel?.textColor = UIColor.black
         }
         
@@ -78,11 +66,8 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
         self.tableView.deselectRow(at: indexPath, animated: true)
         
         if indexPath.section == 0 {
-            
             self.performSegue(withIdentifier: "selectActivity", sender: nil)
-            
         } else {
-            
             self.performSegue(withIdentifier: "selectDaysOfTheWeek", sender: nil)
         }
     }
@@ -119,11 +104,8 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
                 let section = IndexSet(integer: 1)
                 self.tableView.reloadSections(section, with: UITableViewRowAnimation.automatic)
             }
-            
         }
-        
     }
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
@@ -141,10 +123,7 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
             
             if let selectedDays = selectedDaysIndex {
                 destination.selectedDaysIndex = selectedDays
-            }
-            
+            }            
         }
     }
-    
 }
-

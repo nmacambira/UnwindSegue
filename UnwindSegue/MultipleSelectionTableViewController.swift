@@ -13,11 +13,8 @@ class MultipleSelectionTableViewController: UITableViewController {
     @IBOutlet weak var doneButton: UIBarButtonItem!
     
     let daysOfTheWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-    
     var selectedDays: String?
-    
-    var selectedDaysIndex: [Int]? = []
-    
+    var selectedDaysIndex: [Int]? = []    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +25,6 @@ class MultipleSelectionTableViewController: UITableViewController {
     //MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return daysOfTheWeek.count
     }
     
@@ -38,13 +34,9 @@ class MultipleSelectionTableViewController: UITableViewController {
         cell.textLabel?.text = daysOfTheWeek[indexPath.row]
         
         if let selectedDays = selectedDaysIndex {
-            
             if selectedDays.contains(indexPath.row) {
-                
                 cell.accessoryType = .checkmark
-                
             } else {
-                
                 cell.accessoryType = .none
             }
         }
@@ -61,19 +53,13 @@ class MultipleSelectionTableViewController: UITableViewController {
         let selectedRow = indexPath.row
         
         if let selectedDays = selectedDaysIndex {
-            
             if selectedDays.contains(selectedRow) {
-                
                 let index = selectedDays.index(of: selectedRow)
                 selectedDaysIndex!.remove(at: index!)
-                
             } else {
-                
                 selectedDaysIndex!.append(selectedRow)
             }            
         }
-        
-        
         self.tableView.reloadRows(at: [indexPath], with: .none)     
     }
     
@@ -83,27 +69,21 @@ class MultipleSelectionTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "doneDaysOfTheWeek" {
-            
             if (sender as AnyObject) === doneButton {
-                
                 var days: String = ""
                 
                 for (index, day) in daysOfTheWeek.enumerated() {
-                    
                     if let selectedDays = selectedDaysIndex {
-                    
                         if selectedDays.contains(index) {
-                            
                             days += "\(day), "
                         }
                     }
                 }
                 
                 let endIndex = days.index(days.endIndex, offsetBy: -2)
-                self.selectedDays = days.substring(to: endIndex)
-                
+                //self.selectedDays = days.substring(to: endIndex) // Swift 3.1
+                self.selectedDays = String(days[..<endIndex]) // Swift 4.0
             }
-            
         }
     }
 }
