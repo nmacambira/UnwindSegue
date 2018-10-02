@@ -9,30 +9,28 @@
 import UIKit
 
 class MultipleSelectionTableViewController: UITableViewController {
-    
+    // MARK: - Outlets
     @IBOutlet weak var doneButton: UIBarButtonItem!
     
+    // MARK: - Instance Properties
     let daysOfTheWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     var selectedDays: String?
     var selectedDaysIndex: [Int]? = []    
 
+    // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.tableView.tableFooterView = UIView(frame: CGRect.zero)
+        self.tableView.tableFooterView = UIView(frame: .zero)
     }
 
-    //MARK: - Table view data source
-    
+    // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return daysOfTheWeek.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "dayOfTheWeekCell", for: indexPath)
-        
         cell.textLabel?.text = daysOfTheWeek[indexPath.row]
-        
         if let selectedDays = selectedDaysIndex {
             if selectedDays.contains(indexPath.row) {
                 cell.accessoryType = .checkmark
@@ -40,18 +38,13 @@ class MultipleSelectionTableViewController: UITableViewController {
                 cell.accessoryType = .none
             }
         }
-        
         return cell
     }
     
-    //MARK: - Table view delegate
-    
+    // MARK: - Table view delegate    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         self.tableView.deselectRow(at: indexPath, animated: true)
-        
         let selectedRow = indexPath.row
-        
         if let selectedDays = selectedDaysIndex {
             if selectedDays.contains(selectedRow) {
                 let index = selectedDays.index(of: selectedRow)
@@ -61,13 +54,10 @@ class MultipleSelectionTableViewController: UITableViewController {
             }            
         }
         self.tableView.reloadRows(at: [indexPath], with: .none)     
-    }
-    
+    }    
     
     // MARK: - Navigation
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         if segue.identifier == "doneDaysOfTheWeek" {
             if (sender as AnyObject) === doneButton {
                 var days: String = ""
@@ -81,7 +71,6 @@ class MultipleSelectionTableViewController: UITableViewController {
                 }
                 
                 let endIndex = days.index(days.endIndex, offsetBy: -2)
-                //self.selectedDays = days.substring(to: endIndex) // Swift 3.1
                 self.selectedDays = String(days[..<endIndex]) // Swift 4.0
             }
         }
